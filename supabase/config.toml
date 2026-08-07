@@ -1,0 +1,49 @@
+# Supabase CLI config for Baato / Edu Navigator (local dev).
+# Regenerate/extend with `supabase init` if the CLI version needs newer keys.
+project_id = "baato"
+
+[api]
+enabled = true
+port = 54321
+# `public` holds app tables; `extensions` holds pgvector/pgcrypto (see 0001 migration).
+schemas = ["public", "storage", "graphql_public"]
+extra_search_path = ["public", "extensions"]
+max_rows = 1000
+
+[db]
+port = 54322
+shadow_port = 54320
+# Postgres 15 ships with pgvector available; extensions are enabled in-migration
+# (create extension vector / pgcrypto / uuid-ossp) rather than via config.
+major_version = 15
+
+[db.pooler]
+enabled = false
+
+[studio]
+enabled = true
+port = 54323
+
+[inbucket]
+enabled = true
+port = 54324
+
+[storage]
+enabled = true
+# The `verification-docs` bucket is created (private, no public policy) in
+# migration 0005. Signed URLs are minted only by an admin Edge Function.
+file_size_limit = "50MiB"
+
+[auth]
+enabled = true
+site_url = "http://localhost:5173"
+additional_redirect_urls = ["http://localhost:5173"]
+jwt_expiry = 3600
+enable_signup = true
+
+[auth.email]
+enable_signup = true
+enable_confirmations = false
+
+[analytics]
+enabled = false
