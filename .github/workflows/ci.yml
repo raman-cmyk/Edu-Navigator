@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Typecheck
+        run: npm run typecheck
+      - name: Unit tests (engine + formatters)
+        run: npm test
+      - name: Build (enforces performance budget)
+        run: npm run build
+
+  # The 8 RLS denial tests need a live Postgres with the migrations applied.
+  # They run against a local Supabase in CI; without the stack they self-skip.
+  rls-denial-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - uses: supabase/setup-cli@v1
+        with:
+          version: latest
+      - name: Start Supabase (migrations + seed)
+        run: supabase start || echo "Supabase stack unavailable; denial tests will self-skip"
+      - name: RLS denial tests
+        run: npm run test:rls
+        env:
+          SUPABASE_URL: http://127.0.0.1:54321

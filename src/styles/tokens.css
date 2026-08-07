@@ -1,0 +1,65 @@
+/*
+ * Design tokens — the single source of truth.
+ * Derived from docs/04-design-system.md. Do not hard-code these values anywhere
+ * else; reference the custom properties (directly or via Tailwind's mapping).
+ */
+
+:root {
+  /* ---- Color: base ---- */
+  --ink: #17202a; /* deep slate — mountain rock in shadow */
+  --ink-soft: #3d4854;
+  --stone: #6e7681; /* secondary text — 4.6:1 on --paper */
+  --rule: #e4e4df; /* hairlines */
+  --paper: #fafaf7; /* page — a hint of warmth, not cream */
+  --surface: #ffffff; /* cards */
+  --sunk: #f1f1ec; /* wells, inputs, loading blocks */
+
+  /* ---- Color: signal — each has exactly one meaning ---- */
+  --blaze: #d6402b; /* UNANSWERED. nothing else. */
+  --blaze-weak: #fbeae7;
+  --verified: #b07d2b; /* gold tier — badges only */
+  --student: #2f6f5e; /* green tier — badges only */
+  --agent: #a56a2b; /* agent label — badges only */
+  --focus: #2c5fa8; /* keyboard focus only */
+
+  /* ---- Typography ---- */
+  --font-display: 'Bricolage Grotesque', 'Mukta', system-ui, sans-serif;
+  --font-body: 'Mukta', system-ui, sans-serif;
+  --font-data: 'JetBrains Mono', ui-monospace, monospace;
+
+  --t-display-size: 32px;
+  --t-h1-size: 24px;
+  --t-h2-size: 19px;
+  --t-body-size: 16px;
+  --t-body-lh: 1.55;
+  --t-small-size: 14px;
+  --t-micro-size: 12px;
+  --t-data-size: 16px;
+
+  /* ---- Spacing: 4px base ---- */
+  --s1: 4px;
+  --s2: 8px;
+  --s3: 12px;
+  --s4: 16px;
+  --s5: 24px;
+  --s6: 32px;
+  --s7: 40px;
+  --s8: 48px;
+
+  /* ---- Radius: nothing rounder than 6px ---- */
+  --r-sm: 3px;
+  --r-md: 6px;
+
+  /* ---- Elevation: one shadow only ---- */
+  --shadow: 0 1px 2px rgba(23, 32, 42, 0.06);
+}
+
+/*
+ * Devanagari adjustments — required. Latin metrics crush Devanagari's taller
+ * ascenders, the shirorekha, and deeper descenders. Never track Devanagari.
+ */
+[lang='ne'] {
+  --t-body-size: 17px;
+  --t-body-lh: 1.75;
+  letter-spacing: 0;
+}

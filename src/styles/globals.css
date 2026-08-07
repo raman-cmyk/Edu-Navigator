@@ -1,0 +1,89 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import './tokens.css';
+
+/*
+ * Base element styling. The product should read like a field guide printed to be
+ * read outdoors on a cheap phone: practical, legible, quietly confident.
+ */
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-lh);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  margin: 0;
+}
+
+/* Devanagari headlines take Mukta ExtraBold, not Bricolage. */
+[lang='ne'] h1,
+[lang='ne'] h2,
+[lang='ne'] h3 {
+  font-family: var(--font-body);
+  font-weight: 800;
+}
+
+/* Never uppercase — Devanagari has no case; it produces inconsistent UI. */
+.no-uppercase,
+button,
+label {
+  text-transform: none;
+}
+
+/* Money reads as a ledger entry, not a marketing number. */
+.mono {
+  font-family: var(--font-data);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Accessibility floor: visible keyboard focus everywhere. */
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* Minimum touch target. */
+button,
+[role='button'],
+a.btn {
+  min-height: 44px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
