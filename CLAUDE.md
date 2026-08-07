@@ -71,5 +71,7 @@ runnable locally end to end.
 ## Build status
 
 V1 is built milestone by milestone (see `docs/08-build-plan.md`). Shipped so far:
-**M0 Foundation + M1 data layer/RLS + M2 Shortlist tool** (ship gate 1). Community,
-verification, search, admin land in later passes.
+**M0 Foundation + M1 data layer/RLS + M2 Shortlist tool** (ship gate 1) and
+**M3 Community core** (feed + ranking, thread view with the locked-reply mechanic,
+composer, stage/city rooms, upvote-only votes/saves, auth/current-profile).
+Verification, search, notifications, and admin land in later passes.

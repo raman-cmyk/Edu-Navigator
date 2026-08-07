@@ -192,6 +192,95 @@ export interface ShortlistOutput {
   provisional: boolean; // true when no english test / low confidence
 }
 
+// ---- Community rows ----
+export interface Post {
+  id: string;
+  author_id: string;
+  kind: PostKind;
+  stage: JourneyStage;
+  city_id: string | null;
+  title: string;
+  body: string | null;
+  is_anonymous: boolean;
+  shortlist_run_id: string | null;
+  answer_count: number;
+  verified_answer_count: number;
+  upvote_count: number;
+  is_pinned: boolean;
+  removed_at: string | null;
+  created_at: string;
+}
+
+export interface Answer {
+  id: string;
+  post_id: string;
+  author_id: string;
+  body: string;
+  parent_answer_id: string | null;
+  is_marked_helpful: boolean;
+  upvote_count: number;
+  removed_at: string | null;
+  created_at: string;
+}
+
+/** Author summary as rendered in a Badge (anonymous still shows the badge). */
+export interface AuthorSummary {
+  id: string;
+  handle: string;
+  display_name: string;
+  tier: VerificationTier;
+  city: string | null;
+  university: string | null;
+  grad_year: number | null;
+}
+
+/** A post joined with its author + tag info, as the feed/thread render it. */
+export interface FeedPost extends Post {
+  author: AuthorSummary;
+  city_name: string | null;
+  university_tags: string[];
+  country_tags: string[];
+  /** Whether the current viewer has upvoted / saved (viewer-specific). */
+  viewer_upvoted?: boolean;
+  viewer_saved?: boolean;
+}
+
+/** An answer joined with its author, plus its one level of replies. */
+export interface ThreadAnswer extends Answer {
+  author: AuthorSummary;
+  replies: ThreadAnswer[];
+  viewer_upvoted?: boolean;
+}
+
+export type FeedSort = 'hot' | 'new' | 'unanswered';
+
+/** Input to create a question (anyone) or an experience post (verified only). */
+export interface NewPostInput {
+  kind: PostKind;
+  title: string;
+  body: string;
+  stage: JourneyStage;
+  city_id?: string | null;
+  is_anonymous: boolean;
+  shortlist_run_id?: string | null;
+  university_tags: string[];
+  country_tags: string[];
+  experience?: ExperienceDataInput;
+}
+
+/** Structured fields on an experience post — these feed the shortlist tool. */
+export interface ExperienceDataInput {
+  university_id: string | null;
+  course_id: string | null;
+  intake: string;
+  total_paid_npr: number | null;
+  monthly_living_aud: number | null;
+  parttime_hourly_aud: number | null;
+  visa_outcome: VisaOutcome;
+  refusal_reason: string | null;
+  would_choose_again: 'yes' | 'no' | 'unsure';
+}
+
 // ---- Commission ledger (public) ----
 export interface CommissionLedgerRow {
   id: string;

@@ -27,8 +27,13 @@ This repository currently implements **ship gate 1**:
 - **M2 — Shortlist tool:** the pure scoring engine (unit-tested), the `shortlist`
   Edge Function, and the public screens — `/shortlist`, `/s/:slug`,
   `/commissions`, `/methodology`.
+- **M3 — Community core:** auth + current-profile, feed ranking (unanswered
+  boosted), the signature `PostCard`, thread view with verified-answers-first and
+  the locked-reply mechanic, the ask/experience composer with duplicate-check,
+  stage rooms, city rooms (cost panel gated at n≥5), and upvote-only votes/saves.
+  Runs against a demo data layer locally (with a tier switcher) or Supabase.
 
-Community, verification, search, notifications, and admin land in later passes.
+Verification, search, notifications, and admin land in later passes.
 
 ## Quick start
 

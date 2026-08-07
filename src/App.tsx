@@ -15,6 +15,12 @@ const ShortlistPage = lazy(() => import('@/features/shortlist/ShortlistPage').th
 const ResultPage = lazy(() => import('@/features/shortlist/ResultPage').then((m) => ({ default: m.ResultPage })));
 const CommissionsPage = lazy(() => import('@/features/commissions/CommissionsPage').then((m) => ({ default: m.CommissionsPage })));
 const MethodologyPage = lazy(() => import('@/features/methodology/MethodologyPage').then((m) => ({ default: m.MethodologyPage })));
+const CommunityPage = lazy(() => import('@/features/community/CommunityPage').then((m) => ({ default: m.CommunityPage })));
+const StageRoomPage = lazy(() => import('@/features/community/StageRoomPage').then((m) => ({ default: m.StageRoomPage })));
+const CityRoomPage = lazy(() => import('@/features/city/CityRoomPage').then((m) => ({ default: m.CityRoomPage })));
+const FeedPage = lazy(() => import('@/features/feed/FeedPage').then((m) => ({ default: m.FeedPage })));
+const ThreadPage = lazy(() => import('@/features/thread/ThreadPage').then((m) => ({ default: m.ThreadPage })));
+const ComposePage = lazy(() => import('@/features/compose/ComposePage').then((m) => ({ default: m.ComposePage })));
 const ComingSoon = lazy(() => import('@/features/placeholder/ComingSoon').then((m) => ({ default: m.ComingSoon })));
 
 export default function App() {
@@ -28,13 +34,16 @@ export default function App() {
         <Route path="/commissions" element={<CommissionsPage />} />
         <Route path="/methodology" element={<MethodologyPage />} />
 
-        {/* Community + authed + admin — implemented in later milestones. */}
-        <Route path="/c" element={<ComingSoon routeName="Community" />} />
-        <Route path="/c/:stage" element={<ComingSoon routeName="Stage room" />} />
-        <Route path="/city/:slug" element={<ComingSoon routeName="City room" />} />
-        <Route path="/p/:id" element={<ComingSoon routeName="Thread" />} />
-        <Route path="/feed" element={<ComingSoon routeName="Feed" />} />
-        <Route path="/ask" element={<ComingSoon routeName="Composer" />} />
+        {/* Community core (M3) */}
+        <Route path="/feed" element={<FeedPage />} />
+        <Route path="/c" element={<CommunityPage />} />
+        <Route path="/c/:stage" element={<StageRoomPage />} />
+        <Route path="/city/:slug" element={<CityRoomPage />} />
+
+        <Route path="/p/:id" element={<ThreadPage />} />
+        <Route path="/ask" element={<ComposePage />} />
+
+        {/* Later milestones. */}
         <Route path="/search" element={<ComingSoon routeName="Search" />} />
         <Route path="/verify" element={<ComingSoon routeName="Verification" />} />
         <Route path="*" element={<ComingSoon routeName="Not found" />} />
