@@ -32,8 +32,14 @@ This repository currently implements **ship gate 1**:
   the locked-reply mechanic, the ask/experience composer with duplicate-check,
   stage rooms, city rooms (cost panel gated at n≥5), and upvote-only votes/saves.
   Runs against a demo data layer locally (with a tier switcher) or Supabase.
+- **M4 — Verification:** the `/verify` flow (tier picker → upload → client-side
+  canvas redaction → review), the admin queue at `/admin/verify` (oldest-first,
+  24h SLA countdown, reason templates), the `verify-review` Edge Function (the
+  only path that writes tier/city onto a profile), and the post-approval
+  conversion that routes a freshly-verified student to unanswered questions in
+  their city.
 
-Verification, search, notifications, and admin land in later passes.
+Search, notifications, and the rest of the admin surface land in later passes.
 
 ## Quick start
 

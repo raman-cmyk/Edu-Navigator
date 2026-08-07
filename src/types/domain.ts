@@ -281,6 +281,46 @@ export interface ExperienceDataInput {
   would_choose_again: 'yes' | 'no' | 'unsure';
 }
 
+// ---- Verification ----
+export interface VerificationRequest {
+  id: string;
+  user_id: string;
+  requested_tier: 'green' | 'gold';
+  requested_city_id: string | null;
+  doc_kind: DocKind;
+  storage_path: string;
+  redaction_applied: boolean;
+  status: VerificationStatus;
+  reviewer_id: string | null;
+  reviewer_note: string | null;
+  submitted_at: string;
+  reviewed_at: string | null;
+}
+
+/** What the applicant submits (the redacted image never leaves as raw pixels). */
+export interface NewVerificationInput {
+  requested_tier: 'green' | 'gold';
+  requested_city_id: string | null;
+  university_id?: string | null;
+  grad_year?: number | null;
+  doc_kind: DocKind;
+  /** Redacted image as a data URL (demo) or the bytes to upload (prod). */
+  redacted_data_url: string;
+  redaction_applied: boolean;
+}
+
+/** A queue row as the admin sees it: request + applicant + a viewable preview. */
+export interface AdminVerificationItem {
+  request: VerificationRequest;
+  applicant: { id: string; handle: string; display_name: string; tier: VerificationTier };
+  /** Signed URL (prod, 5-min) or data URL (demo). Redaction already applied. */
+  preview_url: string;
+  /** Flags surfaced to the reviewer. */
+  flags: string[];
+}
+
+export type ReviewDecision = 'approved' | 'rejected' | 'more_info';
+
 // ---- Commission ledger (public) ----
 export interface CommissionLedgerRow {
   id: string;

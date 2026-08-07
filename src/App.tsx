@@ -21,6 +21,8 @@ const CityRoomPage = lazy(() => import('@/features/city/CityRoomPage').then((m) 
 const FeedPage = lazy(() => import('@/features/feed/FeedPage').then((m) => ({ default: m.FeedPage })));
 const ThreadPage = lazy(() => import('@/features/thread/ThreadPage').then((m) => ({ default: m.ThreadPage })));
 const ComposePage = lazy(() => import('@/features/compose/ComposePage').then((m) => ({ default: m.ComposePage })));
+const VerifyPage = lazy(() => import('@/features/verify/VerifyPage').then((m) => ({ default: m.VerifyPage })));
+const VerificationQueuePage = lazy(() => import('@/features/admin/VerificationQueuePage').then((m) => ({ default: m.VerificationQueuePage })));
 const ComingSoon = lazy(() => import('@/features/placeholder/ComingSoon').then((m) => ({ default: m.ComingSoon })));
 
 export default function App() {
@@ -43,9 +45,15 @@ export default function App() {
         <Route path="/p/:id" element={<ThreadPage />} />
         <Route path="/ask" element={<ComposePage />} />
 
+        {/* Verification (M4) */}
+        <Route path="/verify" element={<VerifyPage />} />
+        <Route path="/admin/verify" element={<VerificationQueuePage />} />
+
         {/* Later milestones. */}
         <Route path="/search" element={<ComingSoon routeName="Search" />} />
-        <Route path="/verify" element={<ComingSoon routeName="Verification" />} />
+        <Route path="/admin/moderate" element={<ComingSoon routeName="Moderation queue" />} />
+        <Route path="/admin/friction" element={<ComingSoon routeName="Friction log" />} />
+        <Route path="/admin/data" element={<ComingSoon routeName="Data console" />} />
         <Route path="*" element={<ComingSoon routeName="Not found" />} />
       </Routes>
     </Suspense>

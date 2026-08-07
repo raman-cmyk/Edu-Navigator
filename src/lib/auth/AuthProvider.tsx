@@ -20,12 +20,18 @@ interface AuthState {
   isAuthed: boolean;
   canAnswer: boolean;
   isDemo: boolean;
+  isAdmin: boolean;
   signInDemo: (tier: VerificationTier) => void;
+  /** Demo-only: grant admin access to explore the admin surface. */
+  enterAdminDemo: () => void;
+  /** Apply an approved verification to the current profile (demo loop). */
+  applyVerification: (patch: Partial<Profile>) => void;
   signOut: () => void;
 }
 
 const AuthContext = createContext<AuthState | null>(null);
 const DEMO_KEY = 'baato_demo_profile';
+const DEMO_ADMIN_KEY = 'baato_demo_admin';
 
 function demoProfile(tier: VerificationTier): Profile {
   const byTier: Record<VerificationTier, Partial<Profile>> = {
@@ -57,11 +63,13 @@ function demoProfile(tier: VerificationTier): Profile {
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     if (!isSupabaseConfigured) {
       const raw = localStorage.getItem(DEMO_KEY);
       setProfile(raw ? (JSON.parse(raw) as Profile) : null);
+      setIsAdmin(localStorage.getItem(DEMO_ADMIN_KEY) === '1');
       setLoading(false);
       return;
     }
@@ -71,12 +79,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       if (active) setProfile((data as Profile) ?? null);
     }
     supabase.auth.getSession().then(({ data }) => {
-      if (data.session) loadProfile(data.session.user.id).finally(() => active && setLoading(false));
-      else if (active) setLoading(false);
+      if (data.session) {
+        // Admin role lives in app_metadata, set server-side only.
+        setIsAdmin(data.session.user.app_metadata?.role === 'admin');
+        loadProfile(data.session.user.id).finally(() => active && setLoading(false));
+      } else if (active) setLoading(false);
     });
     const { data: sub } = supabase.auth.onAuthStateChange((_e, session) => {
-      if (session) loadProfile(session.user.id);
-      else setProfile(null);
+      if (session) {
+        setIsAdmin(session.user.app_metadata?.role === 'admin');
+        loadProfile(session.user.id);
+      } else {
+        setProfile(null);
+        setIsAdmin(false);
+      }
     });
     return () => {
       active = false;
@@ -90,13 +106,29 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setProfile(p);
   }, []);
 
+  const enterAdminDemo = useCallback(() => {
+    localStorage.setItem(DEMO_ADMIN_KEY, '1');
+    setIsAdmin(true);
+  }, []);
+
+  const applyVerification = useCallback((patch: Partial<Profile>) => {
+    setProfile((prev) => {
+      if (!prev) return prev;
+      const next = { ...prev, ...patch };
+      if (!isSupabaseConfigured) localStorage.setItem(DEMO_KEY, JSON.stringify(next));
+      return next;
+    });
+  }, []);
+
   const signOut = useCallback(() => {
     if (isSupabaseConfigured) {
       supabase.auth.signOut();
     } else {
       localStorage.removeItem(DEMO_KEY);
+      localStorage.removeItem(DEMO_ADMIN_KEY);
     }
     setProfile(null);
+    setIsAdmin(false);
   }, []);
 
   const value = useMemo<AuthState>(
@@ -110,10 +142,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         !profile!.banned_at &&
         !profile!.is_agent,
       isDemo: !isSupabaseConfigured,
+      isAdmin,
       signInDemo,
+      enterAdminDemo,
+      applyVerification,
       signOut,
     }),
-    [profile, loading, signInDemo, signOut],
+    [profile, loading, isAdmin, signInDemo, enterAdminDemo, applyVerification, signOut],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
