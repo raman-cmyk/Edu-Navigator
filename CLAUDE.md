@@ -76,4 +76,7 @@ V1 is built milestone by milestone (see `docs/08-build-plan.md`). Shipped so far
 composer, stage/city rooms, upvote-only votes/saves, auth/current-profile) and
 **M4 Verification** (tier picker → upload → client-side redaction → review flow,
 admin queue with 24h SLA countdown, `verify-review` Edge Function, post-approval
-conversion). Search, notifications, and the rest of admin land in later passes.
+conversion) and **M5 Search + AI** (`/search` with verified-first ranking and a
+labeled AI summary; `search` / `embed` / `summarize-thread` Edge Functions;
+search RPCs). Notifications, profiles, moderation, and the rest of admin land in
+later passes.

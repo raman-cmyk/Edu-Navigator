@@ -38,8 +38,15 @@ This repository currently implements **ship gate 1**:
   only path that writes tier/city onto a profile), and the post-approval
   conversion that routes a freshly-verified student to unanswered questions in
   their city.
+- **M5 — Search & AI:** the `/search` screen (natural-language input, filters,
+  verified-only toggle, a labeled AI summary above the results), the hybrid
+  `search` Edge Function (FTS + pgvector, reciprocal rank fusion, tier
+  weighting), the `embed` backfill and `summarize-thread` functions, and the
+  `search_posts` / `match_posts` SQL RPCs. Search runs in demo locally and
+  degrades gracefully when the AI/embeddings keys aren't set.
 
-Search, notifications, and the rest of the admin surface land in later passes.
+Notifications, profiles, moderation, and the rest of the admin surface land in
+later passes.
 
 ## Quick start
 
