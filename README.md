@@ -45,8 +45,14 @@ This repository currently implements **ship gate 1**:
   `search_posts` / `match_posts` SQL RPCs. Search runs in demo locally and
   degrades gracefully when the AI/embeddings keys aren't set.
 
-Notifications, profiles, moderation, and the rest of the admin surface land in
-later passes.
+- **M6 — Profiles & notifications:** own (`/me`) and others' (`/u/:handle`)
+  profiles with a helpfulness score (quality over post count) and "Ask [name]"
+  routing to a public post (no DMs); `/notifications` grouped by day; `/settings`
+  with granular per-kind/per-channel notification prefs (defaulting to less);
+  the `notify` Edge Function enforcing the hard 2-push/day cap; and `profile_cities`
+  so gold alumni can post in a city room they've lived in.
+
+Moderation and the rest of the admin surface land in later passes.
 
 ## Quick start
 

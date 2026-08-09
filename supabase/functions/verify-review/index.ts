@@ -85,6 +85,14 @@ Deno.serve(async (req: Request) => {
     if (request.requested_city_id) profilePatch.city_id = request.requested_city_id;
     const { error: profErr } = await admin.from('profiles').update(profilePatch).eq('id', request.user_id);
     if (profErr) return json({ error: 'profile_update_failed' }, 500);
+
+    // Record city history so gold alumni can post in this city room later even
+    // after moving away (docs/08 T6.1). Idempotent on (user_id, city_id).
+    if (request.requested_city_id) {
+      await admin
+        .from('profile_cities')
+        .upsert({ user_id: request.user_id, city_id: request.requested_city_id }, { onConflict: 'user_id,city_id' });
+    }
   }
 
   // Notify the applicant (notification insert is service-role only).

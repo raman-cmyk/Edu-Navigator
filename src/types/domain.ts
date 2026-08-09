@@ -345,6 +345,66 @@ export interface SearchResponse {
   results: FeedPost[];
 }
 
+// ---- Notifications (docs/01, docs B9) ----
+export type NotificationKind =
+  | 'verified_answer'
+  | 'marked_helpful'
+  | 'unanswered_expertise'
+  | 'verification_approved'
+  | 'verification_rejected'
+  | 'city_post'
+  | 'weekly_digest';
+
+export const NOTIFICATION_KINDS: NotificationKind[] = [
+  'verified_answer',
+  'marked_helpful',
+  'unanswered_expertise',
+  'verification_approved',
+  'verification_rejected',
+  'city_post',
+  'weekly_digest',
+];
+
+export interface AppNotification {
+  id: string;
+  user_id: string;
+  kind: NotificationKind;
+  payload: Record<string, unknown>;
+  read_at: string | null;
+  created_at: string;
+}
+
+export interface NotificationChannels {
+  in_app: boolean;
+  viber: boolean;
+  email: boolean;
+}
+
+/** Per-kind channel prefs. Defaults lean to LESS (docs B9). */
+export type NotificationPrefs = Partial<Record<NotificationKind, NotificationChannels>>;
+
+// ---- Profiles + helpfulness (docs/05, docs B7) ----
+export interface HelpfulnessInputs {
+  /** Answers the asker marked helpful. */
+  answers_marked_helpful: number;
+  /** Upvotes on your answers from verified users. */
+  verified_upvotes: number;
+  /** Structured experience-data fields you contributed. */
+  structured_contributions: number;
+}
+
+export interface ProfileView {
+  profile: Profile;
+  city_name: string | null;
+  university_name: string | null;
+  helpfulness: HelpfulnessInputs;
+  posts: FeedPost[];
+  answers: (Answer & { post_title: string })[];
+  saved?: FeedPost[];
+  /** People helped by this member's answers (contribution stat). */
+  people_helped: number;
+}
+
 // ---- Commission ledger (public) ----
 export interface CommissionLedgerRow {
   id: string;

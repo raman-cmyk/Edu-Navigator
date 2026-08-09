@@ -24,6 +24,9 @@ const ComposePage = lazy(() => import('@/features/compose/ComposePage').then((m)
 const VerifyPage = lazy(() => import('@/features/verify/VerifyPage').then((m) => ({ default: m.VerifyPage })));
 const VerificationQueuePage = lazy(() => import('@/features/admin/VerificationQueuePage').then((m) => ({ default: m.VerificationQueuePage })));
 const SearchPage = lazy(() => import('@/features/search/SearchPage').then((m) => ({ default: m.SearchPage })));
+const ProfilePage = lazy(() => import('@/features/profile/ProfilePage').then((m) => ({ default: m.ProfilePage })));
+const NotificationsPage = lazy(() => import('@/features/notifications/NotificationsPage').then((m) => ({ default: m.NotificationsPage })));
+const SettingsPage = lazy(() => import('@/features/settings/SettingsPage').then((m) => ({ default: m.SettingsPage })));
 const ComingSoon = lazy(() => import('@/features/placeholder/ComingSoon').then((m) => ({ default: m.ComingSoon })));
 
 export default function App() {
@@ -52,6 +55,12 @@ export default function App() {
 
         {/* Search (M5) */}
         <Route path="/search" element={<SearchPage />} />
+
+        {/* Profiles + notifications (M6) */}
+        <Route path="/me" element={<ProfilePage />} />
+        <Route path="/u/:handle" element={<ProfilePage />} />
+        <Route path="/notifications" element={<NotificationsPage />} />
+        <Route path="/settings" element={<SettingsPage />} />
 
         {/* Later milestones. */}
         <Route path="/admin/moderate" element={<ComingSoon routeName="Moderation queue" />} />

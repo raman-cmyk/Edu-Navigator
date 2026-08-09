@@ -78,5 +78,7 @@ composer, stage/city rooms, upvote-only votes/saves, auth/current-profile) and
 admin queue with 24h SLA countdown, `verify-review` Edge Function, post-approval
 conversion) and **M5 Search + AI** (`/search` with verified-first ranking and a
 labeled AI summary; `search` / `embed` / `summarize-thread` Edge Functions;
-search RPCs). Notifications, profiles, moderation, and the rest of admin land in
-later passes.
+search RPCs) and **M6 Profiles + notifications** (own/others profiles with a
+helpfulness score, `/notifications`, granular per-kind/per-channel prefs, the
+`notify` Edge Function with the hard 2-push/day cap, `/settings`, and
+gold-alumni city history). Moderation and the rest of admin land in later passes.
