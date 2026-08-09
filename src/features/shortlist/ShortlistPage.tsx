@@ -57,13 +57,18 @@ export function ShortlistPage() {
       case 0:
         return Boolean(draft.qualification && draft.score_pct != null && draft.board);
       case 1:
-        return draft.backlogs != null;
-      case 2:
-        return draft.gap_years != null && (draft.gap_years === 0 || Boolean(draft.gap_reason));
+        // Backlogs default to 0 (a valid answer) — don't force a keystroke.
+        return true;
+      case 2: {
+        // Gaps default to 0; a reason is only required once gaps > 0.
+        const gaps = draft.gap_years ?? 0;
+        return gaps === 0 || Boolean(draft.gap_reason);
+      }
       case 3:
         return draft.english_test !== undefined; // null (not taken) is a valid choice
       case 4:
-        return draft.budget_npr != null && draft.has_collateral != null;
+        // Budget has a sensible default (35 lakh); collateral defaults to "no".
+        return true;
       case 5:
         return Boolean(draft.field);
       case 6:
@@ -87,7 +92,7 @@ export function ShortlistPage() {
         english_test: draft.english_test ?? null,
         english_overall: draft.english_overall,
         english_min_band: draft.english_min_band,
-        budget_npr: draft.budget_npr!,
+        budget_npr: draft.budget_npr ?? 3_500_000, // 35 lakh — the slider default
         has_collateral: draft.has_collateral ?? false,
         field: draft.field!,
         priority: draft.priority!,
