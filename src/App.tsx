@@ -23,6 +23,7 @@ const ThreadPage = lazy(() => import('@/features/thread/ThreadPage').then((m) =>
 const ComposePage = lazy(() => import('@/features/compose/ComposePage').then((m) => ({ default: m.ComposePage })));
 const VerifyPage = lazy(() => import('@/features/verify/VerifyPage').then((m) => ({ default: m.VerifyPage })));
 const VerificationQueuePage = lazy(() => import('@/features/admin/VerificationQueuePage').then((m) => ({ default: m.VerificationQueuePage })));
+const SearchPage = lazy(() => import('@/features/search/SearchPage').then((m) => ({ default: m.SearchPage })));
 const ComingSoon = lazy(() => import('@/features/placeholder/ComingSoon').then((m) => ({ default: m.ComingSoon })));
 
 export default function App() {
@@ -49,8 +50,10 @@ export default function App() {
         <Route path="/verify" element={<VerifyPage />} />
         <Route path="/admin/verify" element={<VerificationQueuePage />} />
 
+        {/* Search (M5) */}
+        <Route path="/search" element={<SearchPage />} />
+
         {/* Later milestones. */}
-        <Route path="/search" element={<ComingSoon routeName="Search" />} />
         <Route path="/admin/moderate" element={<ComingSoon routeName="Moderation queue" />} />
         <Route path="/admin/friction" element={<ComingSoon routeName="Friction log" />} />
         <Route path="/admin/data" element={<ComingSoon routeName="Data console" />} />

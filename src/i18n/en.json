@@ -286,6 +286,20 @@
     "visaNotApplied": "Not applied",
     "chooseUnsure": "Unsure"
   },
+  "search": {
+    "title": "Search",
+    "placeholder": "will my visa get rejected with a gap year",
+    "run": "Search",
+    "filters": "Filters",
+    "verifiedOnly": "Only verified answers",
+    "anyStage": "Any stage",
+    "anyCity": "Any city",
+    "summaryAi": "Summary — generated from {{count}} threads",
+    "summaryThreads": "From the threads below",
+    "aiLabel": "AI",
+    "sources": "Sources",
+    "resultsCount": "{{count}} results"
+  },
   "community": {
     "title": "Community",
     "readOnlyBanner": "Reading the community. Sign in to take part.",

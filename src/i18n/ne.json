@@ -286,6 +286,20 @@
     "visaNotApplied": "आवेदन नगरेको",
     "chooseUnsure": "अनिश्चित"
   },
+  "search": {
+    "title": "खोज",
+    "placeholder": "ग्याप वर्ष भएमा मेरो भिसा अस्वीकृत हुन्छ?",
+    "run": "खोज्नुहोस्",
+    "filters": "फिल्टर",
+    "verifiedOnly": "प्रमाणित जवाफ मात्र",
+    "anyStage": "कुनै पनि चरण",
+    "anyCity": "कुनै पनि सहर",
+    "summaryAi": "सारांश — {{count}} थ्रेडबाट तयार",
+    "summaryThreads": "तलका थ्रेडहरूबाट",
+    "aiLabel": "एआई",
+    "sources": "स्रोतहरू",
+    "resultsCount": "{{count}} नतिजा"
+  },
   "community": {
     "title": "समुदाय",
     "readOnlyBanner": "समुदाय पढ्दै। सहभागी हुन साइन इन गर्नुहोस्।",

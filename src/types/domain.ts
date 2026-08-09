@@ -321,6 +321,30 @@ export interface AdminVerificationItem {
 
 export type ReviewDecision = 'approved' | 'rejected' | 'more_info';
 
+// ---- Search (docs/03, docs/07) ----
+export interface SearchFilters {
+  stage?: JourneyStage | null;
+  country?: string | null;
+  university?: string | null;
+  city?: string | null;
+  tier?: VerificationTier | null;
+  verifiedOnly?: boolean;
+  /** ISO date; results older than this are excluded. */
+  since?: string | null;
+}
+
+/** An AI-generated block. Always labeled; `generated=false` for the fallback. */
+export interface AISummary {
+  text: string;
+  sources: { postId: string; title: string }[];
+  generated: boolean;
+}
+
+export interface SearchResponse {
+  summary: AISummary | null;
+  results: FeedPost[];
+}
+
 // ---- Commission ledger (public) ----
 export interface CommissionLedgerRow {
   id: string;
