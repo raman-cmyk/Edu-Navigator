@@ -27,6 +27,9 @@ const SearchPage = lazy(() => import('@/features/search/SearchPage').then((m) =>
 const ProfilePage = lazy(() => import('@/features/profile/ProfilePage').then((m) => ({ default: m.ProfilePage })));
 const NotificationsPage = lazy(() => import('@/features/notifications/NotificationsPage').then((m) => ({ default: m.NotificationsPage })));
 const SettingsPage = lazy(() => import('@/features/settings/SettingsPage').then((m) => ({ default: m.SettingsPage })));
+const ModerationPage = lazy(() => import('@/features/admin/ModerationPage').then((m) => ({ default: m.ModerationPage })));
+const FrictionLogPage = lazy(() => import('@/features/admin/FrictionLogPage').then((m) => ({ default: m.FrictionLogPage })));
+const DataConsolePage = lazy(() => import('@/features/admin/DataConsolePage').then((m) => ({ default: m.DataConsolePage })));
 const ComingSoon = lazy(() => import('@/features/placeholder/ComingSoon').then((m) => ({ default: m.ComingSoon })));
 
 export default function App() {
@@ -62,10 +65,11 @@ export default function App() {
         <Route path="/notifications" element={<NotificationsPage />} />
         <Route path="/settings" element={<SettingsPage />} />
 
-        {/* Later milestones. */}
-        <Route path="/admin/moderate" element={<ComingSoon routeName="Moderation queue" />} />
-        <Route path="/admin/friction" element={<ComingSoon routeName="Friction log" />} />
-        <Route path="/admin/data" element={<ComingSoon routeName="Data console" />} />
+        {/* Admin (M7) */}
+        <Route path="/admin/moderate" element={<ModerationPage />} />
+        <Route path="/admin/friction" element={<FrictionLogPage />} />
+        <Route path="/admin/data" element={<DataConsolePage />} />
+
         <Route path="*" element={<ComingSoon routeName="Not found" />} />
       </Routes>
     </Suspense>

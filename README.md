@@ -52,7 +52,15 @@ This repository currently implements **ship gate 1**:
   the `notify` Edge Function enforcing the hard 2-push/day cap; and `profile_cities`
   so gold alumni can post in a city room they've lived in.
 
-Moderation and the rest of the admin surface land in later passes.
+- **M7 — Moderation & admin:** the `moderate` Edge Function (exactly two rules —
+  outcome-guarantee auto-remove at high confidence, agent-promotion queue-only,
+  everything else stays up) with a deterministic, unit-tested fallback that never
+  flags anger or failure stories; the moderation queue with an immutable action
+  log; the friction log with its V2-picking weekly rollup; and the data console
+  (answer-rate North Star, data confidence by university, commission editor).
+
+Remaining: **M8** — PWA/performance/accessibility polish, the Nepali content
+pass, and launch prep.
 
 ## Quick start
 

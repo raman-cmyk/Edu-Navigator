@@ -81,4 +81,8 @@ labeled AI summary; `search` / `embed` / `summarize-thread` Edge Functions;
 search RPCs) and **M6 Profiles + notifications** (own/others profiles with a
 helpfulness score, `/notifications`, granular per-kind/per-channel prefs, the
 `notify` Edge Function with the hard 2-push/day cap, `/settings`, and
-gold-alumni city history). Moderation and the rest of admin land in later passes.
+gold-alumni city history) and **M7 Moderation + admin** (the `moderate` Edge
+Function's two rules with a deterministic fallback, the moderation queue with an
+immutable action log, the friction log + weekly rollup, and the data console).
+Remaining: **M8** — PWA/performance/accessibility polish, the Nepali content
+pass, and launch prep.

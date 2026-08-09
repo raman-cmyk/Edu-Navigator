@@ -405,6 +405,82 @@ export interface ProfileView {
   people_helped: number;
 }
 
+// ---- Moderation & ops (docs/01, docs C2/C3/C4) ----
+export type ReportReason =
+  | 'agent_as_student'
+  | 'outcome_guarantee'
+  | 'spam'
+  | 'abuse'
+  | 'misinformation'
+  | 'other';
+
+export type ModAction = 'none' | 'removed' | 'labeled_agent' | 'warned' | 'banned';
+
+export interface ModerationActionRow {
+  id: string;
+  moderator_id: string;
+  target_type: 'post' | 'answer';
+  target_id: string;
+  action: ModAction;
+  reason: string;
+  created_at: string;
+}
+
+/** A queue row: a reported item or an AI-flagged one, with the offending text. */
+export interface ModerationQueueItem {
+  id: string;
+  source: 'reported' | 'ai_flagged';
+  target_type: 'post' | 'answer';
+  target_id: string;
+  excerpt: string;
+  author: AuthorSummary;
+  /** Which rule/report triggered it. */
+  reason: ReportReason;
+  /** The specific text that triggered an AI flag, if any. */
+  quote: string | null;
+  ai_confidence: Confidence | null;
+  created_at: string;
+}
+
+export type FrictionTaskType =
+  | 'sop'
+  | 'document_chase'
+  | 'noc_run'
+  | 'translation'
+  | 'visa_prep'
+  | 'uni_application'
+  | 'other';
+
+export interface FrictionEntry {
+  id: string;
+  ops_user_id: string;
+  task_type: FrictionTaskType;
+  student_ref: string;
+  minutes: number;
+  note: string;
+  logged_at: string;
+}
+
+export interface FrictionRollupRow {
+  task_type: FrictionTaskType;
+  total_minutes: number;
+  entries: number;
+}
+
+// ---- Data console (docs C4) ----
+export interface DataConfidenceRow {
+  university_id: string;
+  name: string;
+  data_points: number;
+  confidence: Confidence;
+}
+
+export interface CommunityHealth {
+  answer_rate_7d: number; // 0..1 — share of questions with a verified answer <24h
+  unanswered_backlog: number;
+  median_time_to_first_verified_hours: number | null;
+}
+
 // ---- Commission ledger (public) ----
 export interface CommissionLedgerRow {
   id: string;
