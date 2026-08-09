@@ -83,6 +83,10 @@ helpfulness score, `/notifications`, granular per-kind/per-channel prefs, the
 `notify` Edge Function with the hard 2-push/day cap, `/settings`, and
 gold-alumni city history) and **M7 Moderation + admin** (the `moderate` Edge
 Function's two rules with a deterministic fallback, the moderation queue with an
-immutable action log, the friction log + weekly rollup, and the data console).
-Remaining: **M8** — PWA/performance/accessibility polish, the Nepali content
-pass, and launch prep.
+immutable action log, the friction log + weekly rollup, and the data console) and
+**M8 Polish + launch prep** (PWA offline banner + write-queue + installable
+icons, CI-enforced performance budget, the accessibility floor incl. a skip link,
+cookieless analytics + env-gated error reporting, and the deploy/launch docs).
+**V1 is code-complete.** Two items remain human-gated before public launch (see
+`docs/10-launch.md`): the Nepali native-speaker content pass and the Phase-0 seed
+of real alumni + posts — neither may be faked.

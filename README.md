@@ -59,8 +59,17 @@ This repository currently implements **ship gate 1**:
   log; the friction log with its V2-picking weekly rollup; and the data console
   (answer-rate North Star, data confidence by university, commission editor).
 
-Remaining: **M8** — PWA/performance/accessibility polish, the Nepali content
-pass, and launch prep.
+- **M8 — Polish & launch prep:** installable PWA (offline banner, offline write
+  queue that replays on reconnect, maskable icons, runtime caching), a
+  CI-enforced performance budget (`npm run check:budget`), the accessibility floor
+  (skip link, focus rings, 44px targets, `lang` switching, reduced-motion),
+  cookieless Plausible + an env-gated error hook, and the deploy guide in
+  [`docs/10-launch.md`](./docs/10-launch.md).
+
+**V1 is code-complete** across the whole route map (public, authed, admin). Two
+things remain human-gated before a public launch and must not be faked: the
+Nepali native-speaker content pass, and the Phase-0 seed of ~100 real verified
+alumni + ~300 honest posts. See [`docs/10-launch.md`](./docs/10-launch.md).
 
 ## Quick start
 

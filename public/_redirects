@@ -1,0 +1,3 @@
+# Cloudflare Pages SPA fallback — client-side routes (/s/:slug, /p/:id, /admin/*)
+# resolve to the app shell. The service worker + PWA cache handle offline reads.
+/*    /index.html    200

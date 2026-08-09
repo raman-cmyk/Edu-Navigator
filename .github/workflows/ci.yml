@@ -19,8 +19,10 @@ jobs:
         run: npm run typecheck
       - name: Unit tests (engine + formatters)
         run: npm test
-      - name: Build (enforces performance budget)
+      - name: Build
         run: npm run build
+      - name: Performance budget (fails if bundles exceed the limits)
+        run: npm run check:budget
 
   # The 8 RLS denial tests need a live Postgres with the migrations applied.
   # They run against a local Supabase in CI; without the stack they self-skip.

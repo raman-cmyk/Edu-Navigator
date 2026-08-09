@@ -14,7 +14,8 @@
     "basedOn": "Based on {{count}} verified students",
     "verified": "verified",
     "language": "Language",
-    "offline": "You're offline. Reading works, posting will send when you're back."
+    "offline": "You're offline. Reading works, posting will send when you're back.",
+    "skipToContent": "Skip to content"
   },
   "nav": {
     "feed": "Feed",

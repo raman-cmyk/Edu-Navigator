@@ -10,6 +10,7 @@ import type {
 } from '@/types/domain';
 import { rankFeed, sortRoom, type Viewer } from '@/lib/ranking';
 import { posts as demoPosts, answers as demoAnswers } from './mockCommunity';
+import { enqueue, isOffline, flush, type QueuedWrite } from '@/lib/offlineQueue';
 
 /*
  * Community reads/writes. In production these hit Supabase PostgREST with RLS
@@ -259,6 +260,11 @@ export async function createAnswer(
   author: Profile,
 ): Promise<void> {
   if (isSupabaseConfigured) {
+    // Offline: queue the answer and replay on reconnect (docs/03 §Offline).
+    if (isOffline()) {
+      enqueue('answer', { post_id: postId, author_id: author.id, body, parent_answer_id: parentAnswerId });
+      return;
+    }
     // RLS rejects this unless the author is green/gold and non-agent.
     const { error } = await supabase.from('answers').insert({
       post_id: postId,
@@ -335,6 +341,24 @@ export async function toggleUpvote(
       }
     }
   }
+}
+
+/**
+ * Replay queued offline writes (answers) once back online. Registered on the
+ * window 'online' event in main.tsx. No-op in demo mode.
+ */
+export async function replayQueuedWrites(): Promise<number> {
+  if (!isSupabaseConfigured) return 0;
+  return flush(async (w: QueuedWrite) => {
+    if (w.kind !== 'answer') return;
+    const { error } = await supabase.from('answers').insert({
+      post_id: w.payload.post_id as string,
+      author_id: w.payload.author_id as string,
+      body: w.payload.body as string,
+      parent_answer_id: (w.payload.parent_answer_id as string) ?? null,
+    });
+    if (error) throw error;
+  });
 }
 
 export async function toggleSave(postId: string, author: Profile): Promise<void> {
