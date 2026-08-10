@@ -1,0 +1,54 @@
+name: Deploy to GitHub Pages
+
+# Builds the app and publishes it to GitHub Pages on every push to the branch.
+# Live at https://<owner>.github.io/Edu-Navigator/. Demo mode (no Supabase) —
+# no secrets needed. For a live backend, set VITE_SUPABASE_* as repo variables.
+
+on:
+  push:
+    branches: [claude/edu-navigator-v1-spec-06fa7r]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Build (repo subpath base)
+        run: npm run build
+        env:
+          BASE_PATH: /Edu-Navigator/
+          VITE_SUPABASE_URL: ${{ vars.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ vars.VITE_SUPABASE_ANON_KEY }}
+      - name: SPA fallback for deep links
+        run: cp dist/index.html dist/404.html
+      - uses: actions/configure-pages@v5
+        with:
+          enablement: true
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

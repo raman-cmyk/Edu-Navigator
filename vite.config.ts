@@ -5,6 +5,9 @@ import { fileURLToPath, URL } from 'node:url';
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  // Served at '/' locally and on Cloudflare Pages; the GitHub Pages deploy sets
+  // BASE_PATH='/Edu-Navigator/' (the repo subpath).
+  base: process.env.BASE_PATH || '/',
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
